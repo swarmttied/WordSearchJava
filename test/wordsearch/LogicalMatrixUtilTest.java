@@ -121,4 +121,97 @@ public class LogicalMatrixUtilTest {
         
     }
     
+    @Test
+    public void getPossibleDirections_Center() {
+        Coordinate coor = new Coordinate();
+        coor.m = 2; coor.n = 2;
+        EnumSet<Direction> result = LogicalMatrixUtil.getPossibleDirections(coor, 
+                                                    3, 6, 6);
+        
+        assertTrue(result.contains(Direction.RIGHT));
+        assertTrue(result.contains(Direction.DOWN));
+        assertTrue(result.contains(Direction.UP));
+        assertTrue(result.contains(Direction.LEFT));
+    }
+    
+    @Test 
+    public void getPossibleDirections_NoRight_NoDown() {
+        Coordinate coor = new Coordinate();
+        coor.m = 4; coor.n = 4;
+        EnumSet<Direction> result = LogicalMatrixUtil.getPossibleDirections(coor, 
+                                                    3, 6, 6);
+        
+        assertFalse(result.contains(Direction.RIGHT));
+        assertFalse(result.contains(Direction.DOWN));
+        assertTrue(result.contains(Direction.UP));
+        assertTrue(result.contains(Direction.LEFT));
+    }
+    
+    @Test 
+    public void getPossibleDirections_NoDown() {
+        Coordinate coor = new Coordinate();
+        coor.m = 4; coor.n = 2;
+        EnumSet<Direction> result = LogicalMatrixUtil.getPossibleDirections(coor, 
+                                                    3, 6, 6);
+        
+        assertTrue(result.contains(Direction.RIGHT));
+        assertFalse(result.contains(Direction.DOWN));
+        assertTrue(result.contains(Direction.UP));
+        assertTrue(result.contains(Direction.LEFT));
+    }
+    
+    @Test
+    public void getPossibleDirections_Mone_TooLong() {
+        Coordinate coor = new Coordinate();
+        coor.m = 4; coor.n = 2;
+        EnumSet<Direction> result = LogicalMatrixUtil.getPossibleDirections(coor, 
+                                                    6, 6, 6);
+        
+        assertFalse(result.contains(Direction.RIGHT));
+        assertFalse(result.contains(Direction.DOWN));
+        assertFalse(result.contains(Direction.UP));
+        assertFalse(result.contains(Direction.LEFT));
+    } 
+    
+    @Test
+    public void ctorCharMatrix_NullChars_ThrowsNullPointerEx() {
+        _expectation.expect(NullPointerException.class);
+        new CharMatrix(null,4);
+    }
+    
+    @Test
+    public void ctorCharMatrix_EmptyChars_ThrowsIllegalArgs() {
+        _expectation.expect(IllegalArgumentException.class);
+        new CharMatrix(new char[]{}, 4);
+    }
+    
+    @Test
+    public void ctorCharMatrix_WidthZeroOrLess_ThrowsIllegalArgs() {
+        _expectation.expect(IllegalArgumentException.class);
+        new CharMatrix(new char[]{'C'}, 0);
+    }
+    
+    @Test
+    public void ctorCharMatrix_NotImpliedAsMatrix_ThrowsIllegalArgs() {
+         _expectation.expect(IllegalArgumentException.class);
+        new CharMatrix(new char[]{'a', 'b', 'c', 'd' }, 3);
+    }
+    
+    @Test
+    public void FindWord_Gio_Right()
+    {
+        char[] chars = new char[] { 'g', 'I', 'o', 'A', 'G', 'O', 'b', 'C', 'D' };
+
+        CharMatrix target = new CharMatrix(chars, 3);
+        WordLocation res = target.findWord("GIO");
+
+        assertEquals("getWidth",3, target.getWidth());
+        assertEquals("getHeight",3, target.getHeight());
+        assertNotNull("FindWord result is null.", res);
+        assertEquals(res.getWord(), "GIO");
+        assertEquals(res.getCoordinate().m, 0);
+        assertEquals(res.getCoordinate().n, 0);
+        assertEquals(res.getDirection(), WordDirection.LR);
+    }
+    
 }

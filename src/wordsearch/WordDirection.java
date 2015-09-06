@@ -13,6 +13,7 @@ public enum WordDirection {
     LR("Left Right"),
     RL("Right Left"),
     U("Up"),
+    D("Down"),
     DUL("Diagonal Up Left"),
     DUR("Diagonal Up Right"),
     DDL("Diagonal Down Left"),

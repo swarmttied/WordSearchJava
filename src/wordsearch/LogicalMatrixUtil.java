@@ -13,14 +13,14 @@ import java.util.*;
  */
 public class LogicalMatrixUtil {
     public static Dictionary<Character, Integer[]> findAlphabetCharIndices(String chars){
-        Dictionary<Character, Integer[]> locations = new Hashtable<Character, Integer[]>();
+        Dictionary<Character, Integer[]> locations = new Hashtable<>();
         
         for (Character c = 'A'; c<='Z'; c++) {
             int charIndex = -1;
             
-            Vector<Integer> indices = new Vector<Integer>();            
+            Vector<Integer> indices = new Vector<>();            
             do {
-                charIndex = chars.indexOf(c, ++charIndex);
+                charIndex = chars.indexOf(c, charIndex+1);
                 indices.add(charIndex);
             } while (charIndex > -1);
             
@@ -74,8 +74,9 @@ public class LogicalMatrixUtil {
         if (start.m - elementsLength >= 0)
             directions.add(Direction.UP);
         
-        return directions;
-        
+        return directions;        
     }
+    
+    
 
 }
