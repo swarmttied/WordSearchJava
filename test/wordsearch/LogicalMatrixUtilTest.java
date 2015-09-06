@@ -6,6 +6,8 @@
 package wordsearch;
 
 import java.security.InvalidParameterException;
+import java.util.Dictionary;
+import java.util.EnumSet;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,7 +25,9 @@ import org.junit.rules.ExpectedException;
 public class LogicalMatrixUtilTest {
     
     @Rule
-    public ExpectedException expectation = ExpectedException.none();
+    public ExpectedException _expectation = ExpectedException.none();
+    
+    String _chars = "ABAD";
     
     public LogicalMatrixUtilTest() {
     }
@@ -48,21 +52,25 @@ public class LogicalMatrixUtilTest {
      * Test of findAlphabetCharIndices method, of class LogicalMatrixUtil.
      */
     @Test
-    public void testFindAlphabetCharIndices() {
-        System.out.println("findAlphabetCharIndices");
-        String chars = "";
-        Map expResult = null;
-        Map result = LogicalMatrixUtil.findAlphabetCharIndices(chars);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void findAlphabetCharIndices() {
+       Dictionary<Character, Integer[]> result = LogicalMatrixUtil.findAlphabetCharIndices(_chars);
+       
+       assertEquals("Result count incorrect", 3, result.size());
+       assertEquals("Count for 'A' not correct.", 2, result.get('A').length);
+       assertEquals("Wrong index for 'A'", 0, (int)result.get('A')[0]);
+       assertEquals("Wrong index for 'A'", 2, (int)result.get('A')[1]);
+       assertEquals("Count for 'B' not correct.", 1, result.get('B').length);
+       assertEquals("Wrong index for 'B'", 1, (int)result.get('B')[0]);
+       assertEquals("Count for 'D' not correct.", 1, result.get('D').length);
+       assertEquals("Wrong index for 'D'", 3, (int)result.get('D')[0]);
+       assertTrue("'C' index was found when it should not be.", result.get('C') == null);     
     }
 
     /**
      * Test of getMatrixCoordinate method, of class LogicalMatrixUtil.
      */
     @Test
-    public void testGetMatrixCoordinate() {
+    public void getMatrixCoordinate() {
        
         Coordinate res = LogicalMatrixUtil.getMatrixCoordinate(9,4);
 
@@ -75,9 +83,42 @@ public class LogicalMatrixUtilTest {
      * 
      */
     @Test
-    public void testGetMatrixCoordinate_NegativeWidth_Throw() {
-        expectation.expect(InvalidParameterException.class);
-        throw new InvalidParameterException();
+    public void getMatrixCoordinate_NegativeWidth_Throws() {
+        _expectation.expect(InvalidParameterException.class);
+        LogicalMatrixUtil.getMatrixCoordinate(0, -1);
+    }
+    
+    @Test
+    public void getMatrixCoordinate_NegativeIndex_Throws() {
+        _expectation.expect(InvalidParameterException.class);
+        LogicalMatrixUtil.getMatrixCoordinate(-1, 3);
+    }
+    
+    @Test
+    public void getIndexFromMxN() {
+        Coordinate mn = new Coordinate();
+        mn.m = 1;
+        mn.n = 2;
+        
+        int res = LogicalMatrixUtil.getIndexFromMxN(mn, 3);
+        
+        
+        // We assume a mx3 matrix where m >= 2;
+        // (1,2) should pertain to element 6;
+        assertEquals(5, res);        
+    }
+    
+    @Test
+    public void getPossibleDirections_RightDownDiagonal() {
+        Coordinate coordinate = new Coordinate();
+        EnumSet<Direction> result = LogicalMatrixUtil.getPossibleDirections
+                                                    (coordinate, 4, 6, 6);
+        
+        assertTrue(result.contains(Direction.RIGHT));
+        assertTrue(result.contains(Direction.DOWN));
+        assertFalse(result.contains(Direction.UP));
+        assertFalse(result.contains(Direction.LEFT));       
+        
     }
     
 }

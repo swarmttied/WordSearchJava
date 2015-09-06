@@ -6,26 +6,27 @@
 package wordsearch;
 import java.security.InvalidParameterException;
 import java.util.*;
+
 /**
  *
  * @author Gio
  */
 public class LogicalMatrixUtil {
-    public static Map<Character, Integer[]> findAlphabetCharIndices(String chars){
-        Map<Character, Integer[]> locations = new Hashtable<Character, Integer[]>();
+    public static Dictionary<Character, Integer[]> findAlphabetCharIndices(String chars){
+        Dictionary<Character, Integer[]> locations = new Hashtable<Character, Integer[]>();
         
         for (Character c = 'A'; c<='Z'; c++) {
             int charIndex = -1;
             
-            Vector<Integer> indices = new Vector<Integer>();
+            Vector<Integer> indices = new Vector<Integer>();            
             do {
                 charIndex = chars.indexOf(c, ++charIndex);
                 indices.add(charIndex);
-            } while (charIndex >- -1);
+            } while (charIndex > -1);
             
             if (indices.size() > 1) {
-                indices.remove(-1);
-                locations.put(c,(Integer[])indices.toArray());
+                indices.removeElement(-1);
+                locations.put(c,indices.toArray(new Integer[indices.size()]));
             }            
         }
         
@@ -51,6 +52,30 @@ public class LogicalMatrixUtil {
         coordinate.n = index % matrixWidth;
         
         return coordinate;             
+    }
+    
+    public static int getIndexFromMxN(Coordinate pos, int matrixWidth) {
+        return (int)(pos.m * matrixWidth) + pos.n;
+    }
+    
+    public static EnumSet<Direction> getPossibleDirections(Coordinate start,
+            int elementsLength, int matrixWidth, int matrixHeight) {
+        
+        EnumSet<Direction> directions = EnumSet.noneOf(Direction.class);
+        
+        elementsLength--; // Remove the start char
+        
+        if (start.n + elementsLength <= matrixWidth-1)
+            directions.add(Direction.RIGHT);
+        if (start.n - elementsLength >= 0)
+            directions.add(Direction.LEFT);
+        if (start.m + elementsLength <= matrixHeight-1)
+            directions.add(Direction.DOWN);
+        if (start.m - elementsLength >= 0)
+            directions.add(Direction.UP);
+        
+        return directions;
+        
     }
 
 }
