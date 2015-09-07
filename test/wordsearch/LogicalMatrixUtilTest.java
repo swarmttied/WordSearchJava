@@ -195,23 +195,5 @@ public class LogicalMatrixUtilTest {
     public void ctorCharMatrix_NotImpliedAsMatrix_ThrowsIllegalArgs() {
          _expectation.expect(IllegalArgumentException.class);
         new CharMatrix(new char[]{'a', 'b', 'c', 'd' }, 3);
-    }
-    
-    @Test
-    public void FindWord_Gio_Right()
-    {
-        char[] chars = new char[] { 'g', 'I', 'o', 'A', 'G', 'O', 'b', 'C', 'D' };
-
-        CharMatrix target = new CharMatrix(chars, 3);
-        WordLocation res = target.findWord("GIO");
-
-        assertEquals("getWidth",3, target.getWidth());
-        assertEquals("getHeight",3, target.getHeight());
-        assertNotNull("FindWord result is null.", res);
-        assertEquals(res.getWord(), "GIO");
-        assertEquals(res.getCoordinate().m, 0);
-        assertEquals(res.getCoordinate().n, 0);
-        assertEquals(res.getDirection(), WordDirection.LR);
-    }
-    
+    }        
 }

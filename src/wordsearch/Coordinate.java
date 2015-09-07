@@ -12,4 +12,9 @@ package wordsearch;
 public final class Coordinate {
     public int n;
     public int m;
+    
+    @Override
+    public String toString() {
+        return "(" + m + "," + n + ")";
+    }
 }

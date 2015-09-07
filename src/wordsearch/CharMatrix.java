@@ -14,9 +14,12 @@ import java.util.Objects;
  * @author gio
  */
 public class CharMatrix {
+        
+    // NOTE: Nested single-member interface is Java's equivalent to 
+    //      C# delegate
     
     interface IndexOffsetter {
-        int move(int index);
+        int move(int index);        
     }
     
     interface WidthIndexOffsetter {
@@ -126,18 +129,18 @@ public class CharMatrix {
             // Left?
             if (directions.contains(Direction.LEFT)) {
                 if (wordExists(noSpaceWord, index, getWidth(), _fixM, _toLeft)) {
-                    return new WordLocation(word, coordinate, WordDirection.LR);
+                    return new WordLocation(word, coordinate, WordDirection.RL);
                 }
                 // DownLeft?
                 if (directions.contains(Direction.DOWN)) {
                     if (wordExists(noSpaceWord, index, getWidth(), _toDown, _toLeft)) {
-                        return new WordLocation(word, coordinate, WordDirection.DDR);
+                        return new WordLocation(word, coordinate, WordDirection.DDL);
                     }
                 }
                 // ToUpLeft?
                 if (directions.contains(Direction.UP)) {
                     if (wordExists(noSpaceWord, index, getWidth(), _toUp, _toLeft)) {
-                        return new WordLocation(word, coordinate, WordDirection.DUR);
+                        return new WordLocation(word, coordinate, WordDirection.DUL);
                     }
                 }
             }
@@ -150,8 +153,7 @@ public class CharMatrix {
             if (directions.contains(Direction.DOWN)) {
                 if (wordExists(noSpaceWord, index, getWidth(), _toDown, _fixN))
                     return new WordLocation(word, coordinate, WordDirection.D);
-            }
-            
+            }            
         }
         
         return null;        
@@ -166,7 +168,7 @@ public class CharMatrix {
             index = mOffsetter.move(index, matrixWidth);
             index = nOffsetter.move(index);
             
-            if (_flattenedMatrix[index] != wordToSearch.charAt(index))
+            if (_flattenedMatrix[index] != wordToSearch.charAt(i))
                 return false;
         }
         
