@@ -16,7 +16,7 @@ public class WordLocation {
         _direction = direction;
     }    
     
-    private Coordinate _coordinate;
+    private final Coordinate _coordinate;
 
     /**
      * @return the _coordinate
@@ -25,7 +25,7 @@ public class WordLocation {
         return _coordinate;
     }
 
-    private String _word;
+    private final String _word;
     
     /**
      * @return the _word
@@ -34,7 +34,7 @@ public class WordLocation {
         return _word;
     }
     
-    private WordDirection _direction;
+    private final WordDirection _direction;
 
     /**
      * @return the _direction
