@@ -42,4 +42,9 @@ public class WordLocation {
     public WordDirection getDirection() {
         return _direction;
     }
+    
+    @Override 
+    public String toString() {
+        return String.format("%s %s %s", getWord(), getCoordinate(), getDirection().getFullname());
+    }
 }
