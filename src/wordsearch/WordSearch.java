@@ -70,10 +70,7 @@ public class WordSearch {
     static Tuple2<String,Integer> getChars(String source) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(source));               
-        String line = reader.readLine();
-        
-        // This is strange!!! There is a hidden " in front!!!
-        line = line.substring(1);
+        String line = reader.readLine();     
         int matrixWidth = line.length();
         String nextLine = null;
         while ((nextLine = reader.readLine())!= null){
