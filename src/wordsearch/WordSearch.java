@@ -71,6 +71,9 @@ public class WordSearch {
     {
         BufferedReader reader = new BufferedReader(new FileReader(source));               
         String line = reader.readLine();
+        
+        // This is strange!!! There is a hidden " in front!!!
+        line = line.substring(1);
         int matrixWidth = line.length();
         String nextLine = null;
         while ((nextLine = reader.readLine())!= null){
@@ -78,10 +81,10 @@ public class WordSearch {
         }
 
          Tuple2<String, Integer> result = new Tuple2<>();
-         result.a = line;
+         result.a = line.replace("\"", "");
          result.b = matrixWidth;
          
-         return result;        
+         return result;      
     }
 
     static String[] getWordList(String source) throws IOException
