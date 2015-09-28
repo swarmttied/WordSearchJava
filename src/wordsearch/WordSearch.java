@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.Vector;
 
@@ -63,8 +65,11 @@ public class WordSearch {
             
         }
         catch (Exception ex) {
-            out.format("\n\nRunning time: %s", startTime);
+            long elapsed = (new Date()).getTime() - startTime.getTime();
+            out.format("\n\nRunning time: %d ms.\n", startTime);
         }     
+        long elapsed = (new Date()).getTime() - startTime.getTime();
+        out.format ("\n\nRunning time: %d ms.\n", elapsed);
     }
     
     static Tuple2<String,Integer> getChars(String source) throws IOException
