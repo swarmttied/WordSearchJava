@@ -23,7 +23,8 @@ public enum WordDirection {
     private String _fullname;
     WordDirection(String fullname){
         _fullname = fullname;
-    } 
+        
+    }  
 
     /**
      * @return the full name of the enumeration value
